@@ -12,8 +12,10 @@ import Battery60Icon from '@mui/icons-material/Battery60';
 import BatteryCharging60Icon from '@mui/icons-material/BatteryCharging60';
 import Battery20Icon from '@mui/icons-material/Battery20';
 import BatteryCharging20Icon from '@mui/icons-material/BatteryCharging20';
-import FlashOnIcon from '@mui/icons-material/FlashOn';
-import FlashOffIcon from '@mui/icons-material/FlashOff';
+import RSSI1 from '@mui/icons-material/NetworkWifi1Bar';
+import RSSI2 from '@mui/icons-material/NetworkWifi2Bar';
+import RSSI3 from '@mui/icons-material/NetworkWifi3Bar';
+import RSSI4 from '@mui/icons-material/NetworkWifi';
 import ErrorIcon from '@mui/icons-material/Error';
 import moment from 'moment';
 import { devicesActions } from '../store';
@@ -121,14 +123,16 @@ const DeviceRow = ({ data, index, style }) => {
                 </IconButton>
               </Tooltip>
             )}
-            {position.attributes.hasOwnProperty('ignition') && (
-              <Tooltip title={`${t('positionIgnition')}: ${formatBoolean(position.attributes.ignition, t)}`}>
+            {position.attributes.hasOwnProperty('rssi') && (
+              <Tooltip title={`${t('positionRssi')}: ${formatBoolean(position.attributes.ignition, t)}`}>
                 <IconButton size="small">
-                  {position.attributes.ignition ? (
-                    <FlashOnIcon fontSize="small" className={classes.positive} />
-                  ) : (
-                    <FlashOffIcon fontSize="small" className={classes.neutral} />
-                  )}
+                  {position.attributes.rssi > 75 ? (
+                    <RSSI4 fontSize="small" className={classes.positive} />
+                  ) : position.attributes.rssi > 50 ? (
+                    <RSSI3 fontSize="small" className={classes.positive} />
+                  ) : position.attributes.rssi > 25 ?
+                    (<RSSI2 fontSize="small" className={classes.positive} />)
+                    : (<RSSI1 fontSize="small" className={classes.positive} />)}
                 </IconButton>
               </Tooltip>
             )}
